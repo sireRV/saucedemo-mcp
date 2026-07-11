@@ -2,26 +2,21 @@ import { expect, test } from "@playwright/test";
 
 import { LoginPage } from "../../models/pages/LoginPage";
 
-function getRequiredEnvVariable(name: string): string {
-  const value: string | undefined = process.env[name];
-
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-
-  return value;
+function getCredential(name: string, fallback: string): string {
+  return process.env[name] ?? fallback;
 }
-
-const validUserName: string = getRequiredEnvVariable("VALID_USER_NAME");
-const validUserPassword: string = getRequiredEnvVariable("VALID_USER_PASSWORD");
-const invalidUserName: string = getRequiredEnvVariable("INVALID_USER_NAME");
-const invalidUserPassword: string = getRequiredEnvVariable(
-  "INVALID_USER_PASSWORD",
-);
 
 test.describe("Login page", () => {
   test("logs in successfully with valid credentials", async ({ page }) => {
     const loginPage: LoginPage = new LoginPage(page);
+    const validUserName: string = getCredential(
+      "VALID_USER_NAME",
+      "standard_user",
+    );
+    const validUserPassword: string = getCredential(
+      "VALID_USER_PASSWORD",
+      "secret_sauce",
+    );
 
     await test.step("Navigate to the SauceDemo login page", async () => {
       await loginPage.navigate();
@@ -39,6 +34,14 @@ test.describe("Login page", () => {
 
   test("shows an error for invalid credentials", async ({ page }) => {
     const loginPage: LoginPage = new LoginPage(page);
+    const invalidUserName: string = getCredential(
+      "INVALID_USER_NAME",
+      "invalid_user",
+    );
+    const invalidUserPassword: string = getCredential(
+      "INVALID_USER_PASSWORD",
+      "invalid_password",
+    );
 
     await test.step("Navigate to the SauceDemo login page", async () => {
       await loginPage.navigate();

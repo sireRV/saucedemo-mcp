@@ -1,7 +1,7 @@
 import type { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
-  private static readonly LOGIN_URL: string = "https://saucedemo.com/";
+  private static readonly LOGIN_PATH: string = "/";
 
   public readonly usernameInput: Locator;
   public readonly passwordInput: Locator;
@@ -18,7 +18,7 @@ export class LoginPage {
   }
 
   public async navigate(): Promise<void> {
-    await this.page.goto(LoginPage.LOGIN_URL);
+    await this.page.goto(LoginPage.LOGIN_PATH);
   }
 
   public async enterUsername(username: string): Promise<void> {
