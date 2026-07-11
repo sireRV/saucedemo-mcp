@@ -1,0 +1,11 @@
+[mcp_servers.playwright]
+command = "npx"
+args = [
+  "-y",
+  "@playwright/mcp@latest",
+  "--browser",
+  "chromium",
+  "--executable-path",
+  "/usr/bin/chromium",
+  "--headless"
+]
