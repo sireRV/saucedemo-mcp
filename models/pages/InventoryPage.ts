@@ -22,7 +22,9 @@ export class InventoryPage {
     this.inventoryItems = page.getByTestId("inventory-item");
     this.sortDropdown = page.getByTestId("product-sort-container");
     this.cart = new CartSection(this.header);
-    this.hamburgerMenu = new HamburgerMenuSection(this.page.getByTestId("menu_button_container"));
+    this.hamburgerMenu = new HamburgerMenuSection(
+      this.page.locator("#menu_button_container"),
+    );
   }
 
   public async verifyInventoryPageLoaded(): Promise<void> {
