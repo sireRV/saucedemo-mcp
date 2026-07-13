@@ -1,4 +1,4 @@
-import { expect, test } from "../fixtures/test";
+import { expect, test } from "../../fixtures/test";
 
 const INVENTORY_ITEM_COUNT: number = 6;
 
