@@ -48,10 +48,7 @@ export default defineConfig({
     {
       name: "chromium-authenticated-components",
       dependencies: ["auth-setup"],
-      testMatch: [
-        "**/components/*/*.ts",
-        "**/components/inventory*.ts",
-      ],
+      testMatch: "**/components/inventory-page/**/*.ts",
       use: {
         ...devices["Desktop Chrome"],
         storageState: authFilePath,
@@ -70,8 +67,7 @@ export default defineConfig({
       name: "chromium-guest",
       testIgnore: [
         "**/setup/**/*.setup.ts",
-        "**/components/*/*.ts",
-        "**/components/inventory*.ts",
+        "**/components/inventory-page/**/*.ts",
         "**/e2e/**/*.ts",
       ],
       use: { ...devices["Desktop Chrome"] },

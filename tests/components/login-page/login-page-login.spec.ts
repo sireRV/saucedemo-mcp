@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-import { LoginPage } from "../../models/pages/LoginPage";
+import { LoginPage } from "../../../models/pages/LoginPage";
 import {
   getInvalidCredentials,
   getValidCredentials,
-} from "../support/credentials";
+} from "../../support/credentials";
 
-test.describe("Login page", () => {
+test.describe("Login page login", () => {
   test.beforeEach(async ({ context }) => {
     await context.clearCookies();
   });
