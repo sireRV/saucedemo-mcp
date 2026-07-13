@@ -1,29 +1,25 @@
 import { expect, test } from "@playwright/test";
 
 import { LoginPage } from "../../models/pages/LoginPage";
-
-function getCredential(name: string, fallback: string): string {
-  return process.env[name] ?? fallback;
-}
+import {
+  getInvalidCredentials,
+  getValidCredentials,
+} from "../support/credentials";
 
 test.describe("Login page", () => {
   test("logs in successfully with valid credentials", async ({ page }) => {
     const loginPage: LoginPage = new LoginPage(page);
-    const validUserName: string = getCredential(
-      "VALID_USER_NAME",
-      "standard_user",
-    );
-    const validUserPassword: string = getCredential(
-      "VALID_USER_PASSWORD",
-      "secret_sauce",
-    );
+    const validCredentials = getValidCredentials();
 
     await test.step("Navigate to the SauceDemo login page", async () => {
       await loginPage.navigate();
     });
 
     await test.step("Submit valid credentials", async () => {
-      await loginPage.login(validUserName, validUserPassword);
+      await loginPage.login(
+        validCredentials.username,
+        validCredentials.password,
+      );
     });
 
     await test.step("Verify inventory page is visible", async () => {
@@ -34,21 +30,17 @@ test.describe("Login page", () => {
 
   test("shows an error for invalid credentials", async ({ page }) => {
     const loginPage: LoginPage = new LoginPage(page);
-    const invalidUserName: string = getCredential(
-      "INVALID_USER_NAME",
-      "invalid_user",
-    );
-    const invalidUserPassword: string = getCredential(
-      "INVALID_USER_PASSWORD",
-      "invalid_password",
-    );
+    const invalidCredentials = getInvalidCredentials();
 
     await test.step("Navigate to the SauceDemo login page", async () => {
       await loginPage.navigate();
     });
 
     await test.step("Submit invalid credentials", async () => {
-      await loginPage.login(invalidUserName, invalidUserPassword);
+      await loginPage.login(
+        invalidCredentials.username,
+        invalidCredentials.password,
+      );
     });
 
     await test.step("Verify login failure message is shown", async () => {

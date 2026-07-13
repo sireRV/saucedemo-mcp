@@ -2,6 +2,11 @@ import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 
+const authFilePath: string = path.resolve(
+  __dirname,
+  "playwright/.auth/user.json",
+);
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -36,7 +41,25 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "chromium",
+      name: "auth-setup",
+      testMatch: /setup\/.*\.setup\.ts$/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "chromium-authenticated",
+      dependencies: ["auth-setup"],
+      testMatch: /components\/inventory-page\/.*\.spec\.ts$/,
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: authFilePath,
+      },
+    },
+    {
+      name: "chromium-guest",
+      testIgnore: [
+        /setup\/.*\.setup\.ts$/,
+        /components\/inventory-page\/.*\.spec\.ts$/,
+      ],
       use: { ...devices["Desktop Chrome"] },
     },
 

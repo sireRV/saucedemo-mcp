@@ -1,37 +1,12 @@
-import { expect, test } from "@playwright/test";
-
-import { InventoryPage } from "../../../models/pages/InventoryPage";
-import { LoginPage } from "../../../models/pages/LoginPage";
-
-function getCredential(name: string, fallback: string): string {
-  return process.env[name] ?? fallback;
-}
+import { expect, test } from "../../fixtures/test";
 
 test.describe("Inventory page", () => {
-  test.beforeEach(async ({ page }) => {
-    const loginPage: LoginPage = new LoginPage(page);
-    const validUserName: string = getCredential(
-      "VALID_USER_NAME",
-      "standard_user",
-    );
-    const validUserPassword: string = getCredential(
-      "VALID_USER_PASSWORD",
-      "secret_sauce",
-    );
-
-    await test.step("Navigate to the SauceDemo login page", async () => {
-      await loginPage.navigate();
-    });
-
-    await test.step("Log in as a standard user", async () => {
-      await loginPage.login(validUserName, validUserPassword);
-    });
-  });
-
   test("loads successfully with title, inventory list, and sorting control", async ({
-    page,
+    inventoryPage,
   }) => {
-    const inventoryPage: InventoryPage = new InventoryPage(page);
+    await test.step("Navigate directly to the inventory page", async () => {
+      await inventoryPage.navigate();
+    });
 
     await test.step("Verify the inventory page is displayed", async () => {
       await inventoryPage.verifyInventoryPageLoaded();
@@ -44,8 +19,10 @@ test.describe("Inventory page", () => {
     });
   });
 
-  test("shows the full product list", async ({ page }) => {
-    const inventoryPage: InventoryPage = new InventoryPage(page);
+  test("shows the full product list", async ({ inventoryPage }) => {
+    await test.step("Navigate directly to the inventory page", async () => {
+      await inventoryPage.navigate();
+    });
 
     await test.step("Verify the inventory page is displayed", async () => {
       await inventoryPage.verifyInventoryPageLoaded();
