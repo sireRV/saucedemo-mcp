@@ -5,6 +5,8 @@ import { HamburgerMenuSection } from "../sections/HamburgerMenuSection";
 import { InventoryItemSection } from "../sections/InventoryItemSection";
 
 export class InventoryPage {
+  private static readonly INVENTORY_PATH: string = "/inventory.html";
+
   public readonly root: Locator;
   public readonly header: Locator;
   public readonly pageTitle: Locator;
@@ -25,6 +27,10 @@ export class InventoryPage {
     this.hamburgerMenu = new HamburgerMenuSection(
       this.page.locator("#menu_button_container"),
     );
+  }
+
+  public async navigate(): Promise<void> {
+    await this.page.goto(InventoryPage.INVENTORY_PATH);
   }
 
   public async verifyInventoryPageLoaded(): Promise<void> {
