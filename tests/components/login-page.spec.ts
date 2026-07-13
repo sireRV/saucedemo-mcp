@@ -7,6 +7,10 @@ import {
 } from "../support/credentials";
 
 test.describe("Login page", () => {
+  test.beforeEach(async ({ context }) => {
+    await context.clearCookies();
+  });
+
   test("logs in successfully with valid credentials", async ({ page }) => {
     const loginPage: LoginPage = new LoginPage(page);
     const validCredentials = getValidCredentials();

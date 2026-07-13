@@ -5,6 +5,7 @@ export class InventoryItemSection {
   public readonly itemName: Locator;
   public readonly itemDescription: Locator;
   public readonly itemPrice: Locator;
+  public readonly itemImage: Locator;
   public readonly addToCartButton: Locator;
   public readonly removeButton: Locator;
 
@@ -13,6 +14,7 @@ export class InventoryItemSection {
     this.itemName = root.getByTestId("inventory-item-name");
     this.itemDescription = root.getByTestId("inventory-item-desc");
     this.itemPrice = root.getByTestId("inventory-item-price");
+    this.itemImage = root.getByRole("img");
     this.addToCartButton = root.getByRole("button", { name: "Add to cart" });
     this.removeButton = root.getByRole("button", { name: "Remove" });
   }
