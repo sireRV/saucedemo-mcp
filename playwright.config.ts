@@ -42,13 +42,25 @@ export default defineConfig({
   projects: [
     {
       name: "auth-setup",
-      testMatch: /setup\/.*\.setup\.ts$/,
+      testMatch: "**/setup/**/*.setup.ts",
       use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: "chromium-authenticated",
+      name: "chromium-authenticated-components",
       dependencies: ["auth-setup"],
-      testMatch: /components\/inventory-page\/.*\.spec\.ts$/,
+      testMatch: [
+        "**/components/*/*.ts",
+        "**/components/inventory*.ts",
+      ],
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: authFilePath,
+      },
+    },
+    {
+      name: "chromium-authenticated-e2e",
+      dependencies: ["auth-setup"],
+      testMatch: "**/e2e/**/*.ts",
       use: {
         ...devices["Desktop Chrome"],
         storageState: authFilePath,
@@ -57,8 +69,10 @@ export default defineConfig({
     {
       name: "chromium-guest",
       testIgnore: [
-        /setup\/.*\.setup\.ts$/,
-        /components\/inventory-page\/.*\.spec\.ts$/,
+        "**/setup/**/*.setup.ts",
+        "**/components/*/*.ts",
+        "**/components/inventory*.ts",
+        "**/e2e/**/*.ts",
       ],
       use: { ...devices["Desktop Chrome"] },
     },
